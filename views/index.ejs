@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.css">
+  <script src="/scripts/main.js"></script>
+  <title>I'm Bored</title>
+</head>
+
+<body>
+    <% let bgImage = "";
+   if (uv < 3) {
+bgImage = "/images/0.png";
+} else if (uv < 6) {
+    bgImage = "/images/3_5.png";
+} else if (uv < 8) {
+    bgImage = "/images/6_8.png";
+} else if (uv < 11) {
+    bgImage = "/images/8_11.png";
+}else {
+    bgImage = "/images/12.png";
+}%>
+
+
+
+<div class="uv-background" style="background-image: url('<%= bgImage %>');">
+    <div class="uv-content">
+    <h1>⛅ UV Index Today in <%= city %></h1>
+    
+    <form id="form" class="form">
+  <select class="form-select" onchange="submitWithLatLng(this.value)">
+    <option value="" selected disabled>Select another City</option>
+    <option value="telaviv">Tel Aviv</option>
+    <option value="haifa">Haifa</option>
+    <option value="losangeles">Los Angeles</option>
+  </select>
+</form>
+
+
+    
+    <section id="cards" class="cards">
+     
+      <article class="uv_index">
+        <h2 class="index">
+            <p>☀️ UV Index: 🔆 <%= uv %></p>
+            <p>🕐 Peak Sun: <%= uv_max_time %> </p> 
+                
+               
+        </h2> 
+     </article>
+     
+        <article class="uv-recomend-text">
+            
+        <% if (uv < 3) { %>
+            <p class="uv_text">🏍️ Low:</p> 
+            <p class="text">Safe to be outside. Enjoy the sun responsibly.</p>
+            
+            
+          <% } else if (uv < 6) { %>
+            <p class="uv_text">🏍️ Moderate:</p>
+            <p class="text">👒 Stay in shade during midday</p>
+            <p class="text">🧴 Use SPF 30+</p> 
+            <p class="text">😎 Wear sunglasses and a hat</p>
+            
+          <% } else if (uv < 8) { %>
+            <p class="uv_text">🏍️ High:</p>
+            <p class="text">👒 Limit sun exposure between 10am–4pm</p>
+            <p class="text">🧴 Use SPF 50+</p> 
+            <p class="text">😎 Wear sunglasses, a hat, and protective clothing</p>
+          <% } else if (uv < 11) { %>
+            <p class="uv_text">🏍️ Very High:</p>
+            <p class="text">👒 Avoid the sun during peak hours</p>
+            <p class="text">🧴 Use SPF 50+ and reapply sunscreen often</p> 
+            <p class="text">😎 Wear sunglasses, a hat, and protective clothing</p>
+          <% } else { %>
+            <p class="uv_text">🏍️ Extreme:</p>
+            <p class="text">👒 Stay indoors if possible</p>
+            <p class="text">🧴 Use SPF 50+ and reapply sunscreen often</p> 
+            <p class="text">😎 Wear sunglasses, a hat, and cover skin fully</p>           
+          <% } %>   
+        </article>
+      
+
+
+      <%if (locals.error) {%>
+        <div id="tag-error" class="tag-error">
+        <%=error%>
+      </div>
+      <%}%>
+    </section>
+    
+  </div>
+  <script>function submitWithLatLng(city) {
+  let lat, lng;
+  if (city === "telaviv") {
+    lat = 32.0853;
+    lng = 34.7818;
+  } else if (city === "haifa") {
+    lat = 32.7940;
+    lng = 34.9896;
+  } else if (city === "losangeles") {
+    lat = 34.0522;
+    lng = -118.2437;
+  }
+  if (lat && lng) {
+    window.location.href = `/uv?lat=${lat}&lng=${lng}`;
+  }
+}</script>
+  
+</body>
+
+</html>
